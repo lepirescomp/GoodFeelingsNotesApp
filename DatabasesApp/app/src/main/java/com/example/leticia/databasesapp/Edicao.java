@@ -15,15 +15,19 @@ public class Edicao extends AppCompatActivity {
 //        textView.setText(getIntent().getStringExtra("id"));
 
         Log.i("ta no clique", (textView).getText().toString());
-        Intent intent = new Intent(this,MainActivity.class);
+//        Intent intent = new Intent(this,MainActivity.class);
         if(getIntent().getStringExtra("id")!=null){
             bancoDeDados.update(getIntent().getStringExtra("id"),(textView).getText().toString());
         }
         else{
             bancoDeDados.insert((textView).getText().toString());
         }
-        this.startActivity(intent);
+//        this.startActivity(intent);
+        Log.d("oi", "onOptionsItemSelected: vou finalizar aqui");
+
+        this.finish();
     }
+
 
 
 

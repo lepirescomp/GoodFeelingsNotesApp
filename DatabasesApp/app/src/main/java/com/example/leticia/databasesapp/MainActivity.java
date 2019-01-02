@@ -19,11 +19,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public RecyclerView recyclerView;
+    static public RecyclerView recyclerView;
     public RecyclerView.LayoutManager layoutManager;
-//    public List<String> list;
-    public RecyclerAdapter adapter;
-    public BancoDeDados bancoDeDados;
+    public List<String> list;
+    static public RecyclerAdapter adapter;
+    static public BancoDeDados bancoDeDados;
     static int indice;
 
 
@@ -53,18 +53,21 @@ public class MainActivity extends AppCompatActivity {
         layoutManager =  new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         bancoDeDados = new BancoDeDados(this);
-//        list= bancoDeDados.getLista();
+        list= bancoDeDados.getLista();
 //        list = Arrays.asList("aaa","bbb","cccc");
 //        Log.i("lista", list.toString());
-        adapter = new RecyclerAdapter(this,bancoDeDados);
+        adapter = new RecyclerAdapter(this, list, bancoDeDados);
 //        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
+    }
 
-
-
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("oi", "onOptionsItemSelected: de fato, voltei ali");
+        list.clear();
+        list = bancoDeDados.getLista();
+        adapter.notifyDataSetChanged();
     }
 }

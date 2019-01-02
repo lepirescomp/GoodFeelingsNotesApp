@@ -21,8 +21,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public BancoDeDados bancoDeDados;
 
 
-    public RecyclerAdapter(Context context,BancoDeDados bancoDeDados){
-        this.list = bancoDeDados.getLista();
+    public RecyclerAdapter(Context context,List<String> lista, BancoDeDados bancoDeDados){
+        this.list = lista;// bancoDeDados.getLista();
         Log.i("ta no >>>", list.toString());
         this.context = context;
         this.bancoDeDados=bancoDeDados;
@@ -53,11 +53,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 alertDialog.setNegativeButton("Deletar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        bancoDeDados.delete(((TextView)v).getText().toString());
                         Log.i("lalala", "onClick: lalala ");
-                        notifyItemRemoved(which);
-                        Intent intent = new Intent(context,MainActivity.class);
-                        context.startActivity(intent);
+                        bancoDeDados.delete(((TextView)v).getText().toString());
+                        list.clear();
+                        list = bancoDeDados.getLista();
+//                        notifyItemRemoved(which);
+                        notifyDataSetChanged();
+//                        Intent intent = new Intent(context,MainActivity.class);
+//                        context.startActivity(intent);
                     }
                 });
 
@@ -84,6 +87,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     public int getItemCount() {
         return (null != list ? list.size() : 0);
     }
+
+
+
+
 
 public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView versionName;
